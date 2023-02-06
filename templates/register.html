@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-  <form class="form-example" action="{{ url_for('main') }}" method="post">
+  <form class="form-example" action="{{ url_for('success') }}" method="post">
     <div class="form-row">
       <div class="col-4">
       	<input type="text" class="form-control" name="username" placeholder="Username">
@@ -18,5 +18,5 @@
     </div>
       <button type="submit" class="btn btn-primary">Sign-up</button>
   </form>
-  <a href="/">Click here to Log-in</a>
+  <a href="{{ url_for('login') }}">Click here to Log-in</a>
 {% endblock %}

@@ -38,26 +38,61 @@ def main():
     for isbn, name, author, year in reader:
         book = Books(isbn=isbn, name=name, author=author,
                         year=year)
-        db.session.add(book)
-        print(
-            f"ISBN: {isbn} Name: {name} Author: {author} Year: {year}")
+    db.session.add(book)
     db.session.commit()
     return render_template("index.html") 
 
 @app.route("/register")
 def register():
-	if session.get("username") is not None:
-		return render_template("home.html", username = session.get("username"))
-	return render_template("register.html")
+    return render_template("register.html")
+
+#@app.route("/login")
+#def register():
+#	if session.get("username") is not None:
+#		return render_template("home.html", username = session.get("username"))
+#	return render_template("login.html")
+
+@app.route("/success", methods=["POST"])
+def success():
+    username = request.form.get("username")
+    password = request.form.get("password")
+    user = Users(username=username, password=password)
+    #user_exists = Users.query(username)
+    #if user_exists == username:
+    #    print(f"username: {username}")
+    #    return render_template("error.html")
+    db.session.add(user)
+    db.session.commit()
+    return render_template("success.html", username=user.username)
+
+@app.route("/error", methods=["POST"])
+def error():
+    return render_template("error.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+"""
+@app.route("/home", methods=["POST"])
+def home(user):
+    username = request.form.get("username")
+    password = request.form.get("password")
+    user = Users.query.get(username)
+    if user is None:
+        return render_template("error.html", user=username, message="does not exist")
+    #user_exists = Users.query(username)
+    #if user_exists == username:
+    #    print(f"username: {username}")
+    #    return render_template("error.html")
+    db.session.add(user)
+    db.session.commit()
+    return render_template("home.html")
+"""
 
 if __name__ == '__main__':
     with application.app_context():
         main()
-
-
-
-
-
 
 
 
