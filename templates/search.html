@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block heading %}
+  <h1 style="text-align: center;">Search for a Book</h1>    
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <form class="form-signin", method="POST", action="{{ url_for('search')}}">
+      <h2 class="form-signin-heading">Search for book</h2>
+      {{ wtf.form_field(form.id, placeholder="Enter Book ID") }}
+      {{ wtf.form_field(form.isbn, placeholder="Enter Book ISBN") }}
+      {{ wtf.form_field(form.name, placeholder="Enter the Book's Name") }}
+      {{ wtf.form_field(form.author, placeholder="Enter the Author's Name") }}
+      {{ wtf.form_field(form.year, placeholder="Enter the year the book was published") }}
+      <br>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+  </div>
+{% endblock %}

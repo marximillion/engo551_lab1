@@ -38,7 +38,19 @@ def main():
                      year=year)
     db.session.add(book)
     db.session.commit()
+
     return render_template("index.html")
+
+
+@app.route("/search", methods=['GET', 'POST'])
+# @login_required
+def search():
+    form = BookForm()
+    name = form.name.data
+    #book = Books.query.filter_by(Books.name.contains(form.name.data)).all()
+    # return redirect(url_for('results'))
+
+    return render_template("search.html", form=form)
 
 
 @app.route("/register", methods=['GET', 'POST'])
