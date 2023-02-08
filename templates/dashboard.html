@@ -1,0 +1,17 @@
+{% extends "base1.html" %}
+
+{% block heading %}
+    {{ name }}'s Homepage
+{% endblock %}
+
+{% block body %}
+  <h1>Welcome {{ name }}!</h1>
+  <h3>TO DO:</h3>
+  <ol>
+    <li>Style Dashboard</li>
+    <li>
+        <a href={{ url_for('search')}}>Search</a>
+    </li>
+    <li>Book Page</li>
+  </ol>
+{% endblock %}

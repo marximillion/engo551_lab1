@@ -1,9 +1,21 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block heading %}
-    Log-in
+<h1 style="text-align: center;">Login</h1>    
 {% endblock %}
+
 {% block body %}
+  <div class="container">
+    <form class="form-signin", method="POST", action="{{ url_for('login')}}">
+      <h2 class="form-signin-heading">Please Log In</h2>
+      {{ form.hidden_tag() }}
+      {{ wtf.form_field(form.username) }}
+      {{ wtf.form_field(form.password) }}
+      {{ wtf.form_field(form.remember) }}
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+  </div> <!-- /container -->
+  <!--
   <form action="{{ url_for('main') }}" method="post">
     <div class="form-group">
       <div class="col-4 center-block">
@@ -18,4 +30,5 @@
     <button type="submit" class="btn btn-primary">Login</button>
   </form>
   <a href="/register">Click here to sign-up</a>
+  -->
 {% endblock %}
