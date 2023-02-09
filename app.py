@@ -54,6 +54,9 @@ def register():
         new_user = Users(username=username, password=password)
         db.session.add(new_user)
         db.session.commit()
+        
+        if new_user.query.filter_by(username=form.username.data).first():
+            return redirect(url_for('error'))
 
         return '<h1>New User has been created!</h1>'
 
@@ -69,9 +72,17 @@ def login():
                 login_user(user, remember=form.remember.data)
                 return redirect(url_for('dashboard'))
 
-        return '<h1>Invalid username: ' + form.username.data + ' or password: ' + form.password.data + '</h1>'
+        return redirect(url_for('error'))
 
     return render_template("login.html", form=form)
+
+@app.route("/error")
+def error():
+    if current_user.is_authenticated == False:
+        message1 = "User already exists"
+    message = "Invalid username or password"
+    
+    return render_template("error.html", message=message, message1=message1)
 
 @app.route("/dashboard")
 @login_required

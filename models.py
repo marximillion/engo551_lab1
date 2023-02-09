@@ -26,7 +26,7 @@ class Books(db.Model):
 class Users(UserMixin, db.Model):
     _tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
     
 class LoginForm(FlaskForm):
@@ -35,6 +35,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[
                              InputRequired(), Length(min=8, max=80)])
     remember = BooleanField('Remember me')
+    
 
 
 class RegisterForm(FlaskForm):
@@ -42,3 +43,4 @@ class RegisterForm(FlaskForm):
                            InputRequired(), Length(min=4, max=15)])
     password = PasswordField('Password', validators=[
                              InputRequired(), Length(min=8, max=80)])
+    error_message = "User already exists"
