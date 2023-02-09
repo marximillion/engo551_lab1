@@ -27,21 +27,25 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
 
-@app.route("/")
+
+@app.route("/", methods=['GET'])
 def main():
     db.create_all()
     f = open("books.csv")
     reader = csv.reader(f)
     for isbn, name, author, year in reader:
         book = Books(isbn=isbn, name=name, author=author,
-                        year=year)
+                     year=year)
         db.session.add(book)
     db.session.commit()
-    return render_template("index.html") 
+    db.session.close()
+    return render_template("index.html")
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -54,13 +58,14 @@ def register():
         new_user = Users(username=username, password=password)
         db.session.add(new_user)
         db.session.commit()
-        
+
         if new_user.query.filter_by(username=form.username.data).first():
             return redirect(url_for('error'))
 
         return '<h1>New User has been created!</h1>'
 
     return render_template("register.html", form=form)
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -76,18 +81,21 @@ def login():
 
     return render_template("login.html", form=form)
 
+
 @app.route("/error")
 def error():
-    if current_user.is_authenticated == False:
-        message1 = "User already exists"
+    # if current_user.is_authenticated == False:
+    #message1 = "User already exists"
     message = "Invalid username or password"
-    
-    return render_template("error.html", message=message, message1=message1)
+
+    return render_template("error.html", message=message)
+
 
 @app.route("/dashboard")
 @login_required
 def dashboard():
     return render_template("dashboard.html", name=current_user.username)
+
 
 @app.route("/logout")
 @login_required
@@ -95,59 +103,32 @@ def logout():
     logout_user()
     return redirect(url_for('main'))
 
-@app.route("/search")
+
+@app.route("/search", methods=['GET', 'POST'], defaults={"page": 1})
+@app.route('/search/<int:page>', methods=['GET', 'POST'])
 @login_required
-def search():
+def search(page):
+    page = page
+    pages = 30
+    books = Books.query.filter().all()
+    form = BookForm()
+    # if form.validate_on_submit():
+    #isbn = Books.query.filter_by(isbn=form.isbn.data).all()
+    # return redirect(url_for('results'))
+    if request.method == 'POST' and 'title' in request.form:
+        title = request.form["title"]
+        search = "%{}%".format(title)
+        books = Books.query.filter(Books.name.like(search))
+        return render_template("search.html", books=books)
+    return render_template("search.html", books=books)
+
+
+@app.route("/results")
+@login_required
+def results():
     return render_template("search.html")
+
 
 if __name__ == '__main__':
     with app.app_context():
         main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@app.route("/names")
-def names():
-    names = ["Alice", "Bob", "Combucha", "Donday"]
-    return render_template("names.html", names=names)
-
-@app.route("/hello", methods=["POST"])
-def hello():
-    name = request.form.get("name")
-    return render_template("hello.html", name=name)

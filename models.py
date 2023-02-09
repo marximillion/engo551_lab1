@@ -44,3 +44,11 @@ class Books(db.Model):
     name = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
     year = db.Column(db.String, nullable=False)
+
+
+class BookForm(FlaskForm):
+    id = IntegerField('ID')
+    isbn = StringField('ISBN')
+    title = StringField('Title')
+    author = StringField('Author')
+    year = StringField('Year')
