@@ -104,30 +104,64 @@ def logout():
     return redirect(url_for('main'))
 
 
-@app.route("/search", methods=['GET', 'POST'], defaults={"page": 1})
-@app.route('/search/<int:page>', methods=['GET', 'POST'])
+@app.route("/search", methods=['GET', 'POST'])
+#@app.route('/search/<int:page>', methods=['GET', 'POST'])
 @login_required
-def search(page):
-    page = page
-    pages = 30
+def search():
     books = Books.query.filter().all()
     form = BookForm()
-    # if form.validate_on_submit():
-    #isbn = Books.query.filter_by(isbn=form.isbn.data).all()
-    # return redirect(url_for('results'))
+    return render_template("search.html", books=books)
+
+@app.route("/isbn", methods=['GET', 'POST'])
+@login_required
+def isbn():
+    books = ""
+    if request.method == 'POST' and 'isbn' in request.form:
+        isbn = request.form["isbn"]
+        search = "%{}%".format(isbn)
+        books = Books.query.filter(Books.isbn.ilike(search))
+        return render_template("isbn.html", books=books, search=isbn)
+    return render_template("isbn.html", books=books)
+
+@app.route("/title", methods=['GET', 'POST'])
+@login_required
+def title():
+    books = ""
     if request.method == 'POST' and 'title' in request.form:
         title = request.form["title"]
         search = "%{}%".format(title)
-        books = Books.query.filter(Books.name.like(search))
-        return render_template("search.html", books=books)
-    return render_template("search.html", books=books)
+        books = Books.query.filter(Books.name.ilike(search))
+        return render_template("title.html", books=books, search=title)
+    return render_template("title.html", books=books)
 
-
-@app.route("/results")
+@app.route("/author", methods=['GET', 'POST'])
 @login_required
-def results():
-    return render_template("search.html")
+def author():
+    books = ""
+    if request.method == 'POST' and 'author' in request.form:
+        author = request.form["author"]
+        search = "%{}%".format(author)
+        books = Books.query.filter(Books.author.ilike(search))
+        return render_template("author.html", books=books, search=author)
+    return render_template("author.html", books=books)
 
+@app.route("/year", methods=['GET', 'POST'])
+@login_required
+def year():
+    books = ""
+    if request.method == 'POST' and 'year' in request.form:
+        year = request.form["year"]
+        search = "%{}%".format(year)
+        books = Books.query.filter(Books.year.ilike(search))
+        return render_template("year.html", books=books, search=year)
+    return render_template("year.html", books=books)
+
+@app.route("/book/<book_isbn>", methods=['GET', 'POST'])
+@login_required
+def book_detail(book_isbn):
+    book = Books.query.filter(Books.isbn==book_isbn).all()
+    #isbn = Books.query.filter_by(isbn=book_isbn).first()
+    return render_template("book.html", book=book)
 
 if __name__ == '__main__':
     with app.app_context():

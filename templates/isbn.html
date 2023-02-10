@@ -1,34 +1,33 @@
 {% extends "base1.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
 {% block heading %}
-  <h1 style="text-align: center;">Book Search</h1>    
+  <h1 style="text-align: center;">Search By ISBN</h1>    
 {% endblock %}
 
 {% block body %}
-        <div class="col-md-12 center">
-            <h2>Search By:</h2>
-            <ul class="col-md-12 center">
-                <li>
-                    <a href="{{ url_for('isbn')}}">ISBN</a>
-                </li>
-                <li>
-                    <a href="{{ url_for('title')}}">Title</a>
-                </li>
-                <li>
-                    <a href="{{ url_for('author')}}">Author</a>
-                </li>
-                <li>
-                    <a href="{{ url_for('year')}}">Year</a>
-                </li>
-            </ul>
-        </div>
+    <br>
+    <div class="container">        
+        <form class="form-signin form-signin-inline", method="POST", action="{{ url_for('isbn')}}">
+            <div class="form-group">
+                <div class="col-md-12 center-block">
+                <input type="text" class="form-control" name="isbn" id="isbn" placeholder="Enter Book ISBN">
+                </div>
+            </div>
+        </form> 
+    </div>
+    <br>
+    <div class="container my-3">
+        <div class="col-md-12 text-center">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+        </div> 
+    </div>
 
     <div class="col-12">
-        <h2>Available Books</h2>
+        <h2>Results for "{{ search }}"</h2>
         <table id="example" class="table table-striped table-bordered" style="width: 100%;">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>ISBN</th>
                     <th>Title</th>
                     <th>Author</th>
@@ -42,7 +41,9 @@
             <tr>
                 <td>{{ book.id }}</td>
                 <td>{{ book.isbn }}</td>
-                <td>{{ book.name }}</td>
+                <td>
+                    <a href="{{ url_for('book_detail', book_id=book.id, book_isbn=book.isbn, book_author=book.name, book_author=book.author, book_year=book.year) }}"> {{ book.name }} <a>
+                </td>
                 <td>{{ book.author }}</td>
                 <td>{{ book.year }}</td>
                 <td>
@@ -68,5 +69,5 @@
             </tr>
             </tbody>
         </table>
-    </div>
+  </div>
 {% endblock %}

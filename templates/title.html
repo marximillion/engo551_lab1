@@ -1,34 +1,33 @@
 {% extends "base1.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
 {% block heading %}
-  <h1 style="text-align: center;">Book Search</h1>    
+  <h1 style="text-align: center;">Search By Title</h1>    
 {% endblock %}
 
 {% block body %}
-        <div class="col-md-12 center">
-            <h2>Search By:</h2>
-            <ul class="col-md-12 center">
-                <li>
-                    <a href="{{ url_for('isbn')}}">ISBN</a>
-                </li>
-                <li>
-                    <a href="{{ url_for('title')}}">Title</a>
-                </li>
-                <li>
-                    <a href="{{ url_for('author')}}">Author</a>
-                </li>
-                <li>
-                    <a href="{{ url_for('year')}}">Year</a>
-                </li>
-            </ul>
-        </div>
+    <br>
+    <div class="container">        
+        <form class="form-signin form-signin-inline", method="POST", action="{{ url_for('title')}}">
+            <div class="form-group">
+                <div class="col-md-12 center-block">
+                <input type="text" class="form-control" name="title" id="title" placeholder="Enter Book Title">
+                </div>
+            </div>
+        </form> 
+    </div>
+    <br>
+    <div class="container my-3">
+        <div class="col-md-12 text-center">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+        </div> 
+    </div>
 
     <div class="col-12">
-        <h2>Available Books</h2>
+        <h2>Results for "{{ search }}"</h2>
         <table id="example" class="table table-striped table-bordered" style="width: 100%;">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>ISBN</th>
                     <th>Title</th>
                     <th>Author</th>

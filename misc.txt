@@ -1,0 +1,112 @@
+id = request.form.get("id")
+    isbn = request.form.get("isbn")
+    name = request.form.get("name")
+    author = request.form.get("author")
+    year = request.form.get("year")
+    session = Session(app)
+
+    list1 = []
+    list2 = []
+    list3 = []
+    list4 = []
+    list5 = []
+    results = session.query(Results).all()
+    for i in results:
+        if (name in i.name) is True:
+            list1.append(i,id)
+            list2.append(i,isbn)
+            list3.append(i,name)
+            list4.append(i,author)
+            list5.append(i,year)
+
+    session.commit()
+
+    return render_template("search.html", count=len(list1), r1=list1, r2=list2, r3=list3, r4=list4, r5=list5)
+    session.commit()
+
+class Results(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    isbn = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False)
+    author = db.Column(db.String, nullable=False)
+    year = db.Column(db.String, nullable=False)
+
+@app.route("/search/year", methods=['GET', 'POST'])
+@login_required
+def year():
+    return render_template("year.html")
+
+@app.route("/search/author", methods=['GET', 'POST'])
+@login_required
+def author():
+    return render_template("author.html")
+
+@app.route("/search/title", methods=['GET', 'POST'])
+@login_required
+def title():
+    return render_template("title.html")
+
+@app.route("/search/isbn", methods=['GET', 'POST'])
+@login_required
+def isbn():
+    return render_template("isbn.html")
+
+@app.route("/search/id", methods=['GET', 'POST'])
+@login_required
+def id():
+    return render_template("id.html")
+
+@app.route("/results", methods=['GET', 'POST'])
+@login_required
+def results():
+    return render_template("results.html")
+
+@app.route("/search", methods=['GET', 'POST'])
+@login_required
+def search():
+    id = request.form.get("id")
+    isbn = request.form.get("isbn")
+    name = request.form.get("name")
+    author = request.form.get("author")
+    year = request.form.get("year")
+
+    list1 = []
+    list2 = []
+    list3 = []
+    list4 = []
+    list5 = []
+    results = session.query(Results).all()
+    for i in results:
+        if (name in i.name) is True:
+            list1.append(i,id)
+            list2.append(i,isbn)
+            list3.append(i,name)
+            list4.append(i,author)
+            list5.append(i,year)
+
+    session.commit()
+
+    return render_template("search.html", count=len(list1), r1=list1, r2=list2, r3=list3, r4=list4, r5=list5)
+    #book = Books.query.filter_by(Books.name.contains(form.name.data)).all()
+    # return redirect(url_for('results'))
+
+    #return render_template("search.html")
+
+<div class="col-4">
+                <input type="submit" value="Search" class="form-control btn btn-prim">
+            </div>
+            
+    <div class="col-4">
+        
+            <label for="search-select">Search for book:</label>
+            <select name="search-value" id="search-select">
+                <option value="">--Please choose an option--</option>
+                <option value="id">ID</option>
+                <option value="isbn">ISBN</option>
+                <option value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="year">Year</option>
+            </select>
+
+    </div>
+    <br>
