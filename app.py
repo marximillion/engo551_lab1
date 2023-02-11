@@ -105,12 +105,13 @@ def logout():
 
 
 @app.route("/search", methods=['GET', 'POST'])
-#@app.route('/search/<int:page>', methods=['GET', 'POST'])
+# @app.route('/search/<int:page>', methods=['GET', 'POST'])
 @login_required
 def search():
     books = Books.query.filter().all()
     form = BookForm()
     return render_template("search.html", books=books)
+
 
 @app.route("/isbn", methods=['GET', 'POST'])
 @login_required
@@ -123,6 +124,7 @@ def isbn():
         return render_template("isbn.html", books=books, search=isbn)
     return render_template("isbn.html", books=books)
 
+
 @app.route("/title", methods=['GET', 'POST'])
 @login_required
 def title():
@@ -133,6 +135,7 @@ def title():
         books = Books.query.filter(Books.name.ilike(search))
         return render_template("title.html", books=books, search=title)
     return render_template("title.html", books=books)
+
 
 @app.route("/author", methods=['GET', 'POST'])
 @login_required
@@ -145,6 +148,7 @@ def author():
         return render_template("author.html", books=books, search=author)
     return render_template("author.html", books=books)
 
+
 @app.route("/year", methods=['GET', 'POST'])
 @login_required
 def year():
@@ -156,12 +160,14 @@ def year():
         return render_template("year.html", books=books, search=year)
     return render_template("year.html", books=books)
 
+
 @app.route("/book/<book_isbn>", methods=['GET', 'POST'])
 @login_required
 def book_detail(book_isbn):
-    book = Books.query.filter(Books.isbn==book_isbn).all()
+    book = Books.query.filter(Books.isbn.ilike(book_isbn)).all()
     #isbn = Books.query.filter_by(isbn=book_isbn).first()
     return render_template("book.html", book=book)
+
 
 if __name__ == '__main__':
     with app.app_context():

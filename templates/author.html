@@ -41,7 +41,9 @@
             <tr>
                 <td>{{ book.id }}</td>
                 <td>{{ book.isbn }}</td>
-                <td>{{ book.name }}</td>
+                <td>
+                    <a href="{{ url_for('book_detail', book_isbn=book.isbn) }}"> {{ book.name }} </a>
+                </td>
                 <td>{{ book.author }}</td>
                 <td>{{ book.year }}</td>
                 <td>
