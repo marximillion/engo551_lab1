@@ -37,7 +37,6 @@ Alongside the revised book and review features, there is also a hidden route for
 ```
 
 *Folder items
-
 /static
 dashboard.css : css styling when the user is logged in
 sign in : css styling when the user is logged out
