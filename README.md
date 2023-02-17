@@ -16,7 +16,6 @@ When the user is finished with the search or book details functions, they are ab
 
 
 *Folder items
-```
 /static
 dashboard.css : css styling when the user is logged in
 sign in : css styling when the user is logged out
@@ -35,7 +34,6 @@ register.html : html code for user registration
 search.html : html code for search landing page
 title.html : html code for title search query
 year.html : html code for year search query
-```
 
 
 
