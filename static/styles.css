@@ -1,0 +1,94 @@
+body {
+    background-color: #444444;
+  }
+
+.pagination {
+    margin: auto;
+
+  }
+  
+  .pagination-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: auto;
+  }
+  
+  .pagination-list li {
+    margin: 0 0.25rem;
+  }
+  
+  .pagination-list li.active span {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+  }
+  
+  .pagination-list li a,
+  .pagination-list li.disabled span,
+  .pagination-list li.active span {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    color: #007bff;
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+  }
+  
+  .pagination-list li.disabled span,
+  .pagination-list li.active span {
+    cursor: default;
+    pointer-events: none;
+    color: #080808;
+  }
+
+  #example {
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  #example th,
+  #example td {
+    text-align: center;
+  }
+
+  h2.title{
+    text-align: center;
+  }
+
+  h1.heading{
+    text-align: center;
+  }
+
+  .search {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+  }
+
+  .search-btn{
+    display: block;
+    margin: auto;
+  }
+
+  .book-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+  }
+
+  .review-page{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+  }

@@ -1,0 +1,39 @@
+{% extends "base1.html" %}
+
+{% block title %} Book Page {% endblock %}
+
+{% block heading %}Book Page{% endblock %}
+
+{% block body %}
+    <div class="book-container text-center">
+        {% for book in book %}
+        <h1>{{ book.name }} </h1>
+
+        <h5>Book Information</h5>
+        <br>
+        <p><strong>Title:</strong> {{ book.name }} </p>
+        <p><strong>Author:</strong> {{ book.author }} </p>
+        <p><strong>Publication Year:</strong> {{ book.year }} </p>
+        <p><strong>ISBN:</strong> {{ book.isbn }} </p>
+        <p><strong>Average Rating:</strong> {{ avg_rtg }} / 5 </p>
+        <p><strong>Number of Ratings:</strong> {{ ratings_count }} </p>
+        <br>
+        <h3>Reviews</h3>
+        <br>
+        <h5>Rating out of 5</h5>
+        <form action="{{ url_for('review', book_isbn=book.isbn) }}" method="POST">
+            <input type="radio" name="review" value="1"> 1
+            <input type="radio" name="review" value="2"> 2
+            <input type="radio" name="review" value="3"> 3
+            <input type="radio" name="review" value="4"> 4
+            <input type="radio" name="review" value="5"> 5
+            <br>
+            <h5>Comments</h5>
+            <input type="text" name="comment" id="comment" placeholder="Comments/opinions">   
+            <br>
+            <br>
+            <input type = "submit" value="Submit Review">
+        </form>
+        {% endfor %}
+    </div>
+{% endblock %}

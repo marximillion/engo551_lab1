@@ -1,0 +1,70 @@
+{% extends "base1.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block heading %}
+  <h1 style="text-align: center;">Book Search</h1>    
+{% endblock %}
+
+{% block body %}
+    <h1>Search for a Book by ID</h1>
+    <form method="GET" action="{{ url_for('search1') }}">
+    <label for="book_isbn">Book ISBN:</label>
+    <input type="text" id="book_isbn" name="book_isbn" required>
+    <button type="submit">Search</button>
+    </form>
+
+    <table id="example" class="table table-striped table-bordered" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>ISBN</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Review</th>
+                <th>Submit Review</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books.items %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.name }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.year }}</td>
+            <td>
+                <form>
+                    <input type="radio" name="review" id="one">
+                    <label for="one">1</label>
+                    <input type="radio" name="review" id="two">
+                    <label for="two">2</label>
+                    <input type="radio" name="review" id="three">
+                    <label for="three">3</label>
+                    <input type="radio" name="review" id="four">
+                    <label for="four">4</label>
+                    <input type="radio" name="review" id="five">
+                    <label for="five">5</label>
+                </form>
+            </td>
+            <td>
+                <form id="user-form">
+                    <input type = "submit"> 
+                </form>
+            </td>
+        {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+    
+    {% if book %}
+    <h2>Results</h2>
+    <ul>
+        <li><strong>Title:</strong> {{ book.name }}</li>
+        <li><strong>Author:</strong> {{ book.author }}</li>
+        <li><strong>Year:</strong> {{ book.year }}</li>
+        <li><strong>ISBN:</strong> {{ book.isbn }}</li>
+    </ul>
+    {% elif searched %}
+        <p>No results found for that book ISBN.</p>
+    {% endif %}        
+{% endblock %}
