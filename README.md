@@ -1,5 +1,7 @@
 # Lab 1
 
+```
+
 ENGO 551
 
 Creators: Mark De Guzman
@@ -18,7 +20,7 @@ i.e. http://127.0.0.1:5000/database
 
 Once these steps have been followed, the application should run smoothly.
 
-Description [Lab 1]:  
+Description [Lab 1]:
 For this lab, users are able to register and login using a username and password that is then stored to the database in the "Users" table.
 While on the index of the website, a table "Books" is created where it imports the data from the 'books.csv' file onto the database.
 
@@ -34,7 +36,6 @@ When a user visits the book page, they are able to view the current isbn, title,
 There are also radio options for the user to choose from between 1 through 5 for a ratings and they are able to leave a comment as well. This review/rating feature is limited to one rating per user, and if a user submits multiple reviews for the same book, an error will be shown.
 Alongside the revised book and review features, there is also a hidden route for an api request if you wanted to view the json data of a specific book. Details are in the 'app.py' file in the api function definiton. In short, you specify an isbn and that to the route /api/<isbn> and it returns a page of the raw or parsed json data.
 
-```
 
 *Folder items
 /static
